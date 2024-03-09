@@ -22,7 +22,14 @@
 //Will use an array to pick which ones to randomly use
 const id = [2, 3, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18];
 
+const $tableDiv = $('#table-div');
+const $loadingSign = $('#loading-sign');
+
+$loadingSign.toggle();
+
+
 const newGame = document.querySelector("#start");
+
 newGame.addEventListener('click', showLoadingView);
 
 let categories = [];
@@ -72,12 +79,9 @@ function getCategory(catId) {
  */
 
 async function fillTable() {
-    const $tableDiv = $('#table-div')
-    console.log($tableDiv);
     const table = document.createElement('table')
     table.id = "jeopardy";
     const tHead = document.createElement('tHead');
-    const trHead = document.createElement('tr');
     const tBody = document.createElement('tbody')
     table.classList = "table";
     
@@ -89,9 +93,7 @@ async function fillTable() {
                 td.addEventListener('click', handleClick);
                 td.innerText = "?"
                 td.id = `${i-1}${j}`
-                console.log(td.id);
             } else {
-                console.log(`${j}  ${i}`);
                 td.innerText = categories[j].title;
             }
             tr.appendChild(td);
@@ -105,24 +107,6 @@ async function fillTable() {
 
     table.appendChild(tHead);
     table.appendChild(tBody);
-/*     for(let cat in categories) {
-        const td = document.createElement('td');
-        console.log(categories[cat].title);
-        td.innerText = categories[cat].title;
-        trHead.appendChild(td);
-    }
-    tHead.appendChild(trHead);
-    table.appendChild(tHead);
-
-    for (let i = 0; i < 6; i++){
-        const trBody = document.createElement('tr');
-        for(let cat in categories) {
-            const td = document.createElement('td');
-            console.log(categories[cat]);
-            td.innerText = categories[cat].clues;
-            trBody.appendChild(td);
-        }
-    } */
     $tableDiv.append(table);
 }
 
@@ -136,7 +120,6 @@ async function fillTable() {
 
 function handleClick(evt) {
     let str = evt.target.id.split('')
-    console.log(str);
     let row = str[0];
     let col = str[1];
     let question = categories[col].clues[row].question;
@@ -155,12 +138,16 @@ function handleClick(evt) {
  */
 
 function showLoadingView() {
-
+    $tableDiv.empty();
+    $loadingSign.toggle();
+    setupAndStart();
 }
 
 /** Remove the loading spinner and update the button used to fetch data. */
 
 function hideLoadingView() {
+    $loadingSign.toggle();
+    newGame.innerText = "Restart";
 }
 
 /** Start game:
@@ -184,14 +171,7 @@ async function setupAndStart() {
         throw error;
     }    
     fillTable();
-
-    console.log(categories[0]);
-    console.log(categories[1]);
-    console.log(categories[2]);
-    console.log(categories[3]);
-    console.log(categories[4]);
-    console.log(categories[5]);
-        
+    hideLoadingView();
 }
 
 /** On click of start / restart button, set up game. */
