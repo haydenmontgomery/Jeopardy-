@@ -5,3 +5,25 @@
   #8d2ab5
   #74119c
 */
+
+#jeopardy th, #jeopardy td {
+  border: solid 1px white;
+  width: 12em;
+  padding: 1em;
+}
+
+td{
+  height: 9em;
+  width: 9em;
+  background-color: #060ce9;
+  text-align: center;
+  color: palegoldenrod;
+}
+
+thead td{
+  height: 5em;
+}
+
+tbody td:hover{
+  background-color: rgb(77, 82, 240);
+}
