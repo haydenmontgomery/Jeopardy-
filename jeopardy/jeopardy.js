@@ -22,6 +22,8 @@
 //Will use an array to pick which ones to randomly use
 const id = [2, 3, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18];
 
+const newGame = document.querySelector("#start");
+newGame.addEventListener('click', showLoadingView);
 
 let categories = [];
 
@@ -70,7 +72,8 @@ function getCategory(catId) {
  */
 
 async function fillTable() {
-    const $body = $('body');
+    const $tableDiv = $('#table-div')
+    console.log($tableDiv);
     const table = document.createElement('table')
     table.id = "jeopardy";
     const tHead = document.createElement('tHead');
@@ -85,9 +88,10 @@ async function fillTable() {
             if (i != 0) {
                 td.addEventListener('click', handleClick);
                 td.innerText = "?"
-                td.id = `${i+1}${j+1}`
+                td.id = `${i-1}${j}`
                 console.log(td.id);
             } else {
+                console.log(`${j}  ${i}`);
                 td.innerText = categories[j].title;
             }
             tr.appendChild(td);
@@ -119,7 +123,7 @@ async function fillTable() {
             trBody.appendChild(td);
         }
     } */
-    $body.append(table);
+    $tableDiv.append(table);
 }
 
 /** Handle clicking on a clue: show the question or answer.
@@ -131,14 +135,18 @@ async function fillTable() {
  * */
 
 function handleClick(evt) {
-    console.log(evt.target.id);
     let str = evt.target.id.split('')
+    console.log(str);
     let row = str[0];
     let col = str[1];
+    let question = categories[col].clues[row].question;
+    let answer = categories[col].clues[row].answer;
+
     if (evt.target.innerText == "?"){
-
-
-        //evt.target.innerText = question;
+        evt.target.innerText = question;
+    } else if (evt.target.innerText == question) {
+        evt.target.innerHTML = answer;
+        evt.target.style.backgroundColor = "#28a200";
     }
 }
 
@@ -177,7 +185,12 @@ async function setupAndStart() {
     }    
     fillTable();
 
+    console.log(categories[0]);
+    console.log(categories[1]);
     console.log(categories[2]);
+    console.log(categories[3]);
+    console.log(categories[4]);
+    console.log(categories[5]);
         
 }
 
