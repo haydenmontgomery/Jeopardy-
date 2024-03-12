@@ -24,13 +24,11 @@ const id = [2, 3, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18];
 
 const $tableDiv = $('#table-div');
 const $loadingSign = $('#loading-sign');
+const newGame = document.querySelector("#start");
+newGame.addEventListener('click', showLoadingView);
 
 $loadingSign.toggle();
 
-
-const newGame = document.querySelector("#start");
-
-newGame.addEventListener('click', showLoadingView);
 
 let categories = [];
 
@@ -80,9 +78,9 @@ function getCategory(catId) {
 
 async function fillTable() {
     const table = document.createElement('table')
-    table.id = "jeopardy";
     const tHead = document.createElement('tHead');
     const tBody = document.createElement('tbody')
+    table.id = "jeopardy";
     table.classList = "table";
     
     for (let i = 0; i < 6; i++) {
